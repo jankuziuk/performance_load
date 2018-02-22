@@ -34,18 +34,29 @@
         <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
     </div>
 
+    <style>
+        [data-performance-load]{
+            opacity: 0;
+            -webkit-transition: all 500ms linear;
+            -moz-transition: all 500ms linear;
+            -ms-transition: all 500ms linear;
+            -o-transition: all 500ms linear;
+            transition: all 500ms linear;
+        }
+    </style>
     <script type="text/javascript">
         (function() {
             this.performanceLoadService = function (customOptions) {
                 var service = this,
                     defaultOptions = {
-                        debug: true,
+                        debug: false,
                         selector: '[data-performance-load]',
                         attribute: 'data-performance-load',
                         lazyLoad: true,
+                        lazyLoadRunOffset: 100,
+                        lazyLoadAllAfterTimeout: 3000,
                         breakpointsMode: 'block' // use 'window' or 'block'
-                }, itemsToLoad;
-
+                    }, itemsToLoad;
                 /** Helpers */
                 service.helpers = function() {
                     return {
@@ -64,7 +75,6 @@
                             var imageUrl = '',
                                 currentWidth = 0;
                             for (var width in options.breakpoints){
-
                                 switch (service.settings.breakpointsMode){
                                     case 'window':
                                         currentWidth = window.innerWidth;
@@ -89,7 +99,15 @@
                                 }
 
                                 if (currentWidth >= parseInt(width)){
-                                    imageUrl =  options.breakpoints[width];
+                                    if (typeof options.breakpoints[width] === 'string'){
+                                        imageUrl = options.breakpoints[width];
+                                    } else {
+                                        if ((service.helpers().isHighDensity() || service.helpers().isRetina()) && typeof options.breakpoints[width].retina !== 'undefined'){
+                                            imageUrl = options.breakpoints[width].retina;
+                                        } else {
+                                            imageUrl = options.breakpoints[width].default;
+                                        }
+                                    }
                                 }
                             }
                             return imageUrl;
@@ -102,16 +120,13 @@
                         }
                     }
                 };
-
                 /** Extend settings */
                 service.settings = service.helpers().extendSettings(defaultOptions, customOptions);
-
                 /** Service init */
                 service.init = function () {
                     if (service.helpers().allowedBreakpointsModes.indexOf(service.settings.breakpointsMode) === -1){
                         service.settings.breakpointsMode = service.helpers().defaultBreakpointsMode;
                     }
-
                     itemsToLoad = document.querySelectorAll(service.settings.selector);
                     service.runProcessing();
                     window.onresize = function () {
@@ -122,28 +137,34 @@
                             service.runProcessing();
                         }
                     }
+                    if (service.settings.lazyLoadAllAfterTimeout !== false) {
+                        setTimeout(function () {
+                            service.settings.lazyLoad = false;
+                            service.runProcessing();
+                        }, service.settings.lazyLoadAllAfterTimeout);
+                    }
                 };
-
                 /** Run service processing */
                 service.runProcessing = function () {
                     if (itemsToLoad.length > 0) {
                         for (var i = 0; i < itemsToLoad.length; i++) {
                             var element = itemsToLoad[i];
+
                             if (service.settings.lazyLoad){
-                                if ((window.pageYOffset + window.innerHeight) >= element.offsetTop) {
+                                if ((window.pageYOffset + window.innerHeight) >= element.getBoundingClientRect().top + window.scrollY - service.settings.lazyLoadRunOffset) {
                                     service.setImage(element);
+                                    element.style.opacity = 1;
                                 }
                             } else {
                                 service.setImage(element);
+                                element.style.opacity = 1;
                             }
                         }
                     }
                 };
-
                 /** Set image */
                 service.setImage = function (element) {
                     var options = JSON.parse(element.getAttribute('data-performance-load'));
-
                     /** Get current breakpoint */
                     switch (options.type){
                         case 'background':
@@ -154,12 +175,12 @@
                             break;
                     }
                 };
-
                 service.init();
             };
         }());
 
         new performanceLoadService();
+
     </script>
 
 </body>
