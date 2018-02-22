@@ -16,26 +16,38 @@
     </style>
 </head>
 <body>
-    <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
+    <div style="width: 25%;">
+        <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
+    </div>
     <section class="banner" style="height: 500px;" data-performance-load='{"type": "background","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'></section>
-    <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
+    <div style="width: 50%;">
+        <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
+    </div>
     <section class="banner" style="height: 500px;" data-performance-load='{"type": "background","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'></section>
-    <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
+    <div style="width: 75%;">
+        <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
+    </div>
     <section class="banner" style="height: 500px;" data-performance-load='{"type": "background","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'></section>
+    <div style="width: 100%;">
+        <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
+    </div>
 
     <script type="text/javascript">
         (function() {
             this.performanceLoadService = function (customOptions) {
                 var service = this,
                     defaultOptions = {
-                    selector: '[data-performance-load]',
-                    attribute: 'data-performance-load',
-                    lazyLoad: true
+                        selector: '[data-performance-load]',
+                        attribute: 'data-performance-load',
+                        lazyLoad: true,
+                        breakpointsMode: 'block' // use 'window' or 'block'
                 }, itemsToLoad;
 
                 /** Helpers */
                 service.helpers = function() {
                     return {
+                        defaultBreakpointsMode: 'window',
+                        allowedBreakpointsModes: ['window', 'block'],
                         extendSettings: function (source, properties) {
                             var property;
                             for (property in properties) {
@@ -45,10 +57,20 @@
                             }
                             return source;
                         },
-                        getCurrentBreakpointImage: function (options) {
-                            var imageUrl = '';
+                        getCurrentBreakpointImage: function (element, options) {
+                            var imageUrl = '',
+                                currentWidth = 0;
                             for (var width in options.breakpoints){
-                                if (window.innerWidth >= parseInt(width)){
+
+                                switch (service.settings.breakpointsMode){
+                                    case 'window':
+                                        currentWidth = window.innerWidth;
+                                        break;
+                                    case 'block':
+                                        currentWidth = element.parentNode.offsetWidth;
+                                        break;
+                                }
+                                if (currentWidth >= parseInt(width)){
                                     imageUrl =  options.breakpoints[width];
                                 }
                             }
@@ -62,6 +84,10 @@
 
                 /** Service init */
                 service.init = function () {
+                    if (service.helpers().allowedBreakpointsModes.indexOf(service.settings.breakpointsMode) === -1){
+                        service.settings.breakpointsMode = service.helpers().defaultBreakpointsMode;
+                    }
+
                     itemsToLoad = document.querySelectorAll(service.settings.selector);
                     service.runProcessing();
                     window.onresize = function () {
@@ -97,10 +123,10 @@
                     /** Get current breakpoint */
                     switch (options.type){
                         case 'background':
-                            element.style.backgroundImage = "url('" + service.helpers().getCurrentBreakpointImage(options) + "')";
+                            element.style.backgroundImage = "url('" + service.helpers().getCurrentBreakpointImage(element, options) + "')";
                             break;
                         case 'src':
-                            element.src = service.helpers().getCurrentBreakpointImage(options);
+                            element.src = service.helpers().getCurrentBreakpointImage(element, options);
                             break;
                     }
                 };
