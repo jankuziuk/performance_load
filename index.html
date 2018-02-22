@@ -16,6 +16,8 @@
     </style>
 </head>
 <body>
+    <div class="debug"></div>
+
     <div style="width: 25%;">
         <img src="" data-performance-load='{"type": "src","breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551--green-cars-neon-green.jpg"}}'>
     </div>
@@ -37,6 +39,7 @@
             this.performanceLoadService = function (customOptions) {
                 var service = this,
                     defaultOptions = {
+                        debug: true,
                         selector: '[data-performance-load]',
                         attribute: 'data-performance-load',
                         lazyLoad: true,
@@ -70,11 +73,32 @@
                                         currentWidth = element.parentNode.offsetWidth;
                                         break;
                                 }
+
+                                if (service.settings.debug){
+                                    var debugWr = document.getElementsByClassName('debug');
+                                    if (debugWr.length > 0){
+                                        debugWr[0].innerHTML =
+                                            '<b>Debug enable</b> <br/>' +
+                                            'Platform: ' + navigator.platform + ' <br/>' +
+                                            'User agent: ' + navigator.userAgent + ' <br/>' +
+                                            'Window width: ' + window.innerWidth + ' <br/>' +
+                                            'Window height: ' + window.innerHeight + ' <br/>' +
+                                            'Is high density: ' + service.helpers().isHighDensity() + ' <br/>' +
+                                            'Is retina: ' + service.helpers().isRetina() + ' <br/><hr/>';
+                                    }
+                                }
+
                                 if (currentWidth >= parseInt(width)){
                                     imageUrl =  options.breakpoints[width];
                                 }
                             }
                             return imageUrl;
+                        },
+                        isHighDensity: function () {
+                            return ((window.matchMedia && (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches || window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) || (window.devicePixelRatio && window.devicePixelRatio > 1.3));
+                        },
+                        isRetina: function () {
+                            return ((window.matchMedia && (window.matchMedia('only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-resolution: 75.6dpcm)').matches || window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2)').matches)) || (window.devicePixelRatio && window.devicePixelRatio >= 2)) && /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
                         }
                     }
                 };
