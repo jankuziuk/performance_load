@@ -166,13 +166,10 @@
                 service.setImage = function (element) {
                     var options = JSON.parse(element.getAttribute('data-performance-load'));
                     /** Get current breakpoint */
-                    switch (options.type){
-                        case 'background':
-                            element.style.backgroundImage = "url('" + service.helpers().getCurrentBreakpointImage(element, options) + "')";
-                            break;
-                        case 'src':
-                            element.src = service.helpers().getCurrentBreakpointImage(element, options);
-                            break;
+                    if (element.nodeName === 'IMG'){
+                        element.src = service.helpers().getCurrentBreakpointImage(element, options);
+                    } else {
+                        element.style.backgroundImage = "url('" + service.helpers().getCurrentBreakpointImage(element, options) + "')";
                     }
                 };
                 service.init();
