@@ -26,8 +26,8 @@
         <!--<img src="" data-performance-load='{"breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551&#45;&#45;green-cars-neon-green.jpg"}}'>-->
     <!--</div>-->
     <!--<section class="banner" style="height: 500px;" data-performance-load='{"breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551&#45;&#45;green-cars-neon-green.jpg"}}'></section>-->
-    <div style="width: 75%;">
-        <img src="" data-performance-load='{"breakpoints":{"0":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/homepage-mobile-personal-400x130.jpg","retina":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/homepage-mobile-personal.jpg"},"400":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/homepage-mobile-personal.jpg","retina":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/homepage-mobile-personal.jpg"},"992":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2017\/12\/homepage-new-img.jpg","retina":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2017\/12\/homepage-new-img.jpg"},"1024":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2017\/12\/homepage-new-img.jpg","retina":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2017\/12\/homepage-new-img.jpg"},"1440":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2017\/12\/homepage-new-img.jpg","retina":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2017\/12\/homepage-new-img.jpg"},"1920":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2017\/12\/homepage-new-img.jpg","retina":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2017\/12\/homepage-new-img.jpg"}}}'>
+    <div>
+        <img src="" data-performance-load='{"type":"background","breakpoints":{"0":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/hero-image-mobile-v1-400x246.jpg"},"400":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/hero-image-mobile-v1.jpg"},"992":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/hero-image-desktop-v1-a-1024x443.jpg"},"1024":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/hero-image-desktop-v1-a-1440x623.jpg"},"1440":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/hero-image-desktop-v1-a-1920x831.jpg"},"1920":{"default":"http:\/\/zello.frompolandwithdev.com\/wp-content\/uploads\/2018\/01\/hero-image-desktop-v1-a-2880x1246.jpg"}}}'>
     </div>
     <!--<section class="banner" style="height: 500px;" data-performance-load='{"breakpoints": {"0": "http://static5.businessinsider.com/image/592f4169b74af41b008b5977/the-10-most-beautiful-cars-on-sale-today.jpg","768": "http://static4.businessinsider.com/image/58b0498654905720098b6822/these-are-the-18-most-reliable-used-cars-of-2017.jpg","992": "https://i.pinimg.com/736x/b2/97/98/b2979823e56db4d8a162601dccaf4551&#45;&#45;green-cars-neon-green.jpg"}}'></section>-->
     <!--<div style="width: 100%;">-->
@@ -74,8 +74,29 @@
                         getCurrentBreakpointImage: function (element, options) {
                             var imageUrl = '',
                                 type = '',
-                                currentWidth = 0;
-                            for (var width in options.breakpoints){
+                                currentWidth = 0,
+                                width = 0,
+                                sizes = Object.keys(options.breakpoints);
+
+                            var getUrl = function (size) {
+                                var url = '', typeOfDevise = '';
+                                if (typeof options.breakpoints[size] === 'string'){
+                                    url = options.breakpoints[size];
+                                } else {
+                                    if ((service.helpers().isHighDensity() || service.helpers().isRetina()) && typeof options.breakpoints[size].retina !== 'undefined'){
+                                        typeOfDevise = 'retina';
+                                        url = options.breakpoints[size].retina;
+                                    } else {
+                                        typeOfDevise = 'default';
+                                        url = options.breakpoints[size].default;
+                                    }
+                                }
+
+                                return { 'url': url, 'typeOfDevise': typeOfDevise };
+                            };
+
+                            for (var i = 0; i < sizes.length; i++){
+                                width = sizes[i];
                                 switch (service.settings.breakpointsMode){
                                     case 'window':
                                         currentWidth = window.innerWidth;
@@ -99,20 +120,16 @@
                                     }
                                 }
 
-                                if (currentWidth <= parseInt(width)){
-                                    if (typeof options.breakpoints[width] === 'string'){
-                                        imageUrl = options.breakpoints[width];
-                                    } else {
-                                        if ((service.helpers().isHighDensity() || service.helpers().isRetina()) && typeof options.breakpoints[width].retina !== 'undefined'){
-                                            type = 'retina';
-                                            imageUrl = options.breakpoints[width].retina;
-                                        } else {
-                                            type = 'default';
-                                            imageUrl = options.breakpoints[width].default;
-                                        }
-                                    }
-
+                                if (typeof sizes[i+1] !== 'undefined' && currentWidth < parseInt(sizes[i+1])){
+                                    var data = getUrl(sizes[i]);
+                                    imageUrl = data.url;
+                                    type = data.typeOfDevise;
                                     break;
+                                } else {
+                                    var data = getUrl(sizes[sizes.length - 1]);
+                                    imageUrl = data.url;
+                                    type = data.typeOfDevise;
+                                    width = sizes[sizes.length - 1];
                                 }
                             }
                             return {'url': imageUrl, 'width': width, 'type': type, 'currentWidth' : currentWidth};
